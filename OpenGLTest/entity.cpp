@@ -8,6 +8,8 @@
 
 #include "entity.hpp"
 
+
+
 int Entity::createCycle(int r, int c,int w, int h, int amount, int speed)
 {
     cycle tmp;
@@ -33,21 +35,27 @@ void Entity::updateAnimation()
            animations[currentAnimation].height);
     if(begin>animations[currentAnimation].speed)
     {
-        animations[currentAnimation].tick++;
+        if(!reversed)animations[currentAnimation].tick++;
+        if(reversed)animations[currentAnimation].tick--;
+
         begin=0;
     }
     begin++;
-    
-    if(animations[currentAnimation].tick >= animations[currentAnimation].amount)
+  //  animations[currentAnimation].row++;
+//    std::cout<<"tick: "<<animations[currentAnimation].tick<<std::endl;
+//   std::cout<<"Row: "<<animations[currentAnimation].row<<std::endl;
+  /*   std::cout<<"Begin: "<<begin<<std::endl; */
+  //  std::cout<<"Amount: "<<animations[currentAnimation].amount<<std::endl;
+    if(animations[currentAnimation].tick >= animations[currentAnimation].amount )//&& repeat
     {
         animations[currentAnimation].tick=0;
-        animations[currentAnimation].row++;//increment column after total rows reached
+   //     animations[currentAnimation].row++;//increment column after total rows reached
     }
     
-    if(animations[currentAnimation].row >= animations[currentAnimation].column)
-    {
-        animations[currentAnimation].row=0;
-    }
+ //   if(animations[currentAnimation].row >= animations[currentAnimation].column)
+ //   {
+ //       animations[currentAnimation].row=0;
+ //   }
 
               
 }

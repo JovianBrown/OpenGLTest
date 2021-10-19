@@ -16,6 +16,7 @@ using namespace std;
 #include <SDL2_image/SDL_image.h>
 #include "object.hpp"
 #include "entity.hpp"
+#include "player.hpp"
 
 class Game {
 public:
@@ -49,11 +50,13 @@ private:
     int frameCount, timerFPS, lastFrame;
     Object backgroundLayer0;
     Object backgroundLayer1;
-    Object background[3];
+    Object background[2];
     Entity player;
+    Player ship;
   //  Entity entities [1];
   
     int idle;
-    int right;
+    int left;
+    int shipidle;
 };
 #endif /* game_hpp */
