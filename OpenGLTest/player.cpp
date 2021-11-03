@@ -36,7 +36,10 @@ void Player::updateAnimation()
     
     if(begin>animations[currentAnimation].speed)
     {
-        animations[currentAnimation].tick++;
+        if(!reversed)animations[currentAnimation].tick++;
+     //   animations[currentAnimation].tick++;
+        if(reversed)animations[currentAnimation].tick--;
+
         begin=0;
     }
     begin++;
@@ -44,8 +47,8 @@ void Player::updateAnimation()
  //   animations[currentAnimation].tick++;
  //   animations[currentAnimation].currentcolumn++;
 
-    std::cout<<"Current tick : "<<animations[currentAnimation].tick<<std::endl;
-    std::cout<<"Current Column : "<<animations[currentAnimation].currentcolumn<<std::endl;
+//    std::cout<<"Current tick : "<<animations[currentAnimation].tick<<std::endl;
+//    std::cout<<"Current Column : "<<animations[currentAnimation].currentcolumn<<std::endl;
 
     if(animations[currentAnimation].tick>=animations[currentAnimation].row)
     {
@@ -53,10 +56,10 @@ void Player::updateAnimation()
 
         animations[currentAnimation].tick=0;
     }
-    if(animations[currentAnimation].currentcolumn>=animations[currentAnimation].column)
+    if(animations[currentAnimation].currentcolumn>=animations[currentAnimation].column )
     {
         animations[currentAnimation].currentcolumn=animations[currentAnimation].startingcolumn;
-       // animations[currentAnimation].tick=0;
+        animations[currentAnimation].tick=0;
     }
  /*
     

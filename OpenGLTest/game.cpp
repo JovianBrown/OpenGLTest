@@ -7,7 +7,8 @@
 //
 
 #include "game.hpp"
-
+//#include "background.hpp"
+//#include "loadbackground.hpp"
 Game::Game()
 {
  
@@ -30,43 +31,36 @@ Game::Game()
     {
         cout<<"unable to load font";
     }
+   
     
+  
+    backgrounds[0].setHeight(2560);
+    backgrounds[0].setSrc(0,2560,640,640);
+    backgrounds[0].setDest(0,0,640,640);
+    backgrounds[0].setImage("res/starsBGlayer0.png",ren);
+    
+    
+   // background.initbg(bg,0);
+    backgrounds[1].setHeight(640);
+    backgrounds[1].setSrc(0,640,640,640);
+    backgrounds[1].setDest(0,0,640,640);
+    backgrounds[1].setImage("res/starsBGlayer1.png",ren);
+    numberBGlayers=sizeof(backgrounds)/sizeof(backgrounds[0]);
+    background.initbg(backgrounds,numberBGlayers);
 
-     background[0].setHeight(2560);
-     background[0].setSrc(0,2560,640,640);
-     background[0].setDest(0,0,640,640);
-     background[0].setImage("res/starsBGlayer0.png",ren);
-    if( background[0].getTex()==NULL)
-    {
-        cout<<"unable to load starsbg1280.png";
-    }
-    background[1].setHeight(640);
-    background[1].setSrc(0,640,640,640);
-    background[1].setDest(0,0,640,640);
-    background[1].setImage("res/starsBGlayer1.png",ren);
-    if(background[1].getTex()==NULL)
-    {
-        cout<<"unable to load starsBGlayer1.png";
-    }
-
-
+   
+  // player.reverseAnimation(true);
+ //   player.setCurrentAnimation(idle);
+ //
+    
+    
+    playeridle=player.createCycle(8,4,0,200,180,8,4);  //createCycle(int totalrows, int totalcolumns,starting column ,int w, int h, int amount, int speed)
+    playerleft=player.createCycle(8,9,4,200,180,8,4);
     player.setSrc(0,0,200,180);
     player.setImage("res/spaceshipspriteall.png",ren);
     player.setDest(100,400,200,180); //no scaling 200x200
-    
-    idle=player.createCycle(0,4,200,180,32,4); /*createCycle(starting row, total columns, sprite height,sprite width,totalrows (amount), speed of animation */
-    
-    left=player.createCycle(4,4,200,180,8,8);
-    player.reverseAnimation(false);
-    player.setCurrentAnimation(idle);
-    player.repeatAnimation(true);
-    
-    
-    shipidle=ship.createCycle(8,4,0,200,180,8,4);  //createCycle(int totalrows, int totalcolumns,starting column ,int w, int h, int amount, int speed)
-    ship.setSrc(0,0,200,180);
-    ship.setImage("res/spaceshipspriteall.png",ren);
-    ship.setDest(100,400,200,180); //no scaling 200x200
-    
+    player.repeatAnimation(false);
+    player.setCurrentAnimation(playeridle);
     loop();
     
 }
@@ -85,7 +79,6 @@ void Game::loop()
             lastTime = lastFrame;
             frameCount=0;
             
-          //  cout<<"
         }
         render();
         input();
@@ -96,9 +89,12 @@ void Game::loop()
 }
 void Game::update()
 {
-   // player.updateAnimation();
-    ship.updateAnimation();
-    background[0].setSrc(background[0].getSrc().x,background[0].getSrc().y-1,640,640);
+
+
+    player.updateAnimation();
+    background.update(backgrounds);
+
+/*    background[0].setSrc(background[0].getSrc().x,background[0].getSrc().y-1,640,640);
     background[0].setHeight(background[0].getSrc().y-1);
     if(background[0].getHeight()<1)
     {
@@ -112,7 +108,7 @@ void Game::update()
     if(background[1].getHeight()<1)
     {
         background[1].setSrc(background[1].getSrc().x,640,640,640);
-    }
+    }  */
 }
 void Game::render()
 {
@@ -122,10 +118,13 @@ void Game::render()
     rect.w=640;
     rect.h=640;
     SDL_RenderFillRect(ren,&rect);
-    draw(background[0]);
-    draw(background[1]);
-   // draw(player);
-    draw(ship);
+
+    for(int i = 0;i<=numberBGlayers;i++)
+    {
+        draw(backgrounds[i]);
+    }
+   // std::cout<<"background index size: "<<sizeof(backgrounds)<<std::endl;
+    draw(player);
     drawText("OpenGLTest",20,30,255,255,255);
     frameCount++;
     int timerFPS = SDL_GetTicks()-lastFrame;
@@ -149,7 +148,7 @@ void Game::input()
         }
         if(e.type == SDL_KEYUP)
         {
-            player.setCurrentAnimation(idle);
+           player.setCurrentAnimation(playeridle);
         
         }
         if(keystates[SDL_SCANCODE_Q])
@@ -158,24 +157,24 @@ void Game::input()
         }
         if(keystates[SDL_SCANCODE_D])
         {
-            player.setDest(player.getDest().x+10,player.getDest().y,200,200);
+            player.setDest(player.getDest().x+10,player.getDest().y,200,180);
         }
         if(keystates[SDL_SCANCODE_A])
         {
-            player.setCurrentAnimation(left);
+            player.setCurrentAnimation(playerleft);
 
-           player.setDest(player.getDest().x-10,player.getDest().y,200,200);
+           player.setDest(player.getDest().x-10,player.getDest().y,200,180);
         }
         if(keystates[SDL_SCANCODE_W])
         {
             
-            player.setDest(player.getDest().x,player.getDest().y-10,200,200);
+            player.setDest(player.getDest().x,player.getDest().y-10,200,180);
             
         }
         if(keystates[SDL_SCANCODE_S])
         {
             
-            player.setDest(player.getDest().x,player.getDest().y+10,200,200);
+            player.setDest(player.getDest().x,player.getDest().y+10,200,180);
         }
       
         
@@ -188,6 +187,7 @@ void Game::draw(Object o)
     SDL_RenderCopyEx(ren,o.getTex(),&src,&dest,0,NULL,SDL_FLIP_NONE);
     //SDL_DestroyTexture(o.getTex());
 }
+
 
 void Game::drawText(const char* msg, int x, int y, int r, int g, int b)
 {
@@ -208,10 +208,8 @@ void Game::drawText(const char* msg, int x, int y, int r, int g, int b)
     SDL_FreeSurface(surf);
     SDL_RenderCopy(ren,text,NULL,&rect);
     SDL_DestroyTexture(text);
-    
-    
-    
 }
+
 Game::~Game()
 {
     TTF_CloseFont(font);

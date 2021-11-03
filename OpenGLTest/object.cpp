@@ -27,6 +27,7 @@ void Object::setSrc(int x, int y, int w, int h)
 void Object::setHeight(int height)
 {
     Object::height=height;
+  //  height = height;
 }
 void Object::setImage(std::string filename, SDL_Renderer* ren)
 {

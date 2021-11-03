@@ -12,10 +12,10 @@
 #include <iostream>
 using namespace std;
 #include <SDL2/SDL.h>
+#include "background.hpp"
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_image/SDL_image.h>
 #include "object.hpp"
-#include "entity.hpp"
 #include "player.hpp"
 
 class Game {
@@ -28,8 +28,9 @@ public:
 
     void render();
     void draw(Object o);
+
+
     void drawText(const char* msg, int x, int y, int r, int g, int b);
-    void drawEntities(Entity e);
 private:
  // renderer and window
     SDL_Renderer* ren;
@@ -48,15 +49,19 @@ private:
     int count;
     int screenWidth,screenHeight;
     int frameCount, timerFPS, lastFrame;
-    Object backgroundLayer0;
-    Object backgroundLayer1;
-    Object background[2];
-    Entity player;
-    Player ship;
+  //  Object backgroundLayer0;
+  //  Object backgroundLayer1;
+   // Loadbackground backgroundlayers;
+    //Object background[2];
+  //  Object bg,mg,fg;
+    Player player;
+    Background background;
+    Object backgrounds[2];
+    int numberBGlayers;
   //  Entity entities [1];
   
-    int idle;
-    int left;
-    int shipidle;
+   
+    int playeridle;
+    int playerleft;
 };
 #endif /* game_hpp */

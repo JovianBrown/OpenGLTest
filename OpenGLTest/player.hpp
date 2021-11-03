@@ -15,15 +15,7 @@
 class Player : public Object
 {
 public:
-    
-    int getHealth() const
-    {
-        return health;
-    }
-    int getMaxHealth() const
-    {
-        return maxHealth;
-    }
+   
     int createCycle(int row, int column,int startingcolumn, int width, int height, int amount, int speed); //amount really is totalrows
     void setCurrentAnimation(int c )
     {
@@ -38,6 +30,15 @@ public:
     void repeatAnimation(bool r )
     {
         repeat=r;
+    }
+    
+    int getHealth() const
+    {
+        return health;
+    }
+    int getMaxHealth() const
+    {
+        return maxHealth;
     }
 private:
     int health, maxHealth;
