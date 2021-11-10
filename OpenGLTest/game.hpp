@@ -12,11 +12,11 @@
 #include <iostream>
 using namespace std;
 #include <SDL2/SDL.h>
-#include "background.hpp"
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_image/SDL_image.h>
 #include "object.hpp"
 #include "player.hpp"
+#include "parallax.hpp"
 
 class Game {
 public:
@@ -28,6 +28,7 @@ public:
 
     void render();
     void draw(Object o);
+    void draw(Object* o);
 
 
     void drawText(const char* msg, int x, int y, int r, int g, int b);
@@ -49,18 +50,10 @@ private:
     int count;
     int screenWidth,screenHeight;
     int frameCount, timerFPS, lastFrame;
-  //  Object backgroundLayer0;
-  //  Object backgroundLayer1;
-   // Loadbackground backgroundlayers;
-    //Object background[2];
-  //  Object bg,mg,fg;
+
     Player player;
-    Background background;
-    Object backgrounds[2];
-    int numberBGlayers;
-  //  Entity entities [1];
-  
-   
+    Parallax backgrounds[2];
+  //  Object backgrounds[2];
     int playeridle;
     int playerleft;
 };

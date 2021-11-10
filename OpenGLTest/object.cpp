@@ -24,11 +24,7 @@ void Object::setSrc(int x, int y, int w, int h)
     src.h=h;
 }
 
-void Object::setHeight(int height)
-{
-    Object::height=height;
-  //  height = height;
-}
+
 void Object::setImage(std::string filename, SDL_Renderer* ren)
 {
     SDL_Surface* surf = IMG_Load(filename.c_str());

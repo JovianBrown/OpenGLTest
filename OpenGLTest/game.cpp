@@ -7,8 +7,7 @@
 //
 
 #include "game.hpp"
-//#include "background.hpp"
-//#include "loadbackground.hpp"
+#include "parallax.hpp"
 Game::Game()
 {
  
@@ -16,7 +15,8 @@ Game::Game()
     {
         std::cout<<"SDL Init has failed with error: "<<SDL_GetError()<<std::endl;
     }
-    
+    std::cout<<"SDL Init Success "<<std::endl;
+
     SDL_CreateWindowAndRenderer(640, 640, 0, &win,&ren);
     if(win ==NULL)
     {
@@ -31,29 +31,34 @@ Game::Game()
     {
         cout<<"unable to load font";
     }
-   
+  //  background.backgrounds[0].setImage("res/starsBGlayer1.png",ren);
     
-  
-    backgrounds[0].setHeight(2560);
-    backgrounds[0].setSrc(0,2560,640,640);
-    backgrounds[0].setDest(0,0,640,640);
-    backgrounds[0].setImage("res/starsBGlayer0.png",ren);
+   /* background.setHeight(1200);
+    background.backgrounds[0]->setImage("res/starsBGlayer1.png",ren);
+    background.backgrounds[0]->setSrc(0,640,640,640);
+    background.backgrounds[0]->setDest(0,0,640,640); */
+ //   background.getBackground().backgrounds[0].setImage("res/starsBGlayer1.png",ren);
+ //   background.backgrounds[0].setImage("res/starsBGlayer1.png",ren);
+ //   background.backgrounds[0].setSrc(0,640,640,640);
+  //  background.backgrounds[0].setDest(0,0,640,640);
+  //  background.setHeight(1200);
     
+    backgrounds[0].setHeight(640);
+    backgrounds[0].setOffset(0);
+    backgrounds[0].setSrc(0,0,640,640);
+    backgrounds[0].setDest(0,-640,640,640);
+    backgrounds[0].setImage("res/starsBGlayer1.png",ren);
+    std::cout<<"BG0 OFFSET" << backgrounds[0].getOffset()<<std::endl;
     
-   // background.initbg(bg,0);
     backgrounds[1].setHeight(640);
-    backgrounds[1].setSrc(0,640,640,640);
+    backgrounds[1].setOffset(0);
+    backgrounds[1].setSrc(0,0,640,640);
     backgrounds[1].setDest(0,0,640,640);
     backgrounds[1].setImage("res/starsBGlayer1.png",ren);
-    numberBGlayers=sizeof(backgrounds)/sizeof(backgrounds[0]);
-    background.initbg(backgrounds,numberBGlayers);
+    std::cout<<"BG1 OFFSET" << backgrounds[1].getOffset()<<std::endl;
 
-   
-  // player.reverseAnimation(true);
- //   player.setCurrentAnimation(idle);
- //
-    
-    
+  //  std::cout<<backgrounds[1].getHeight()<<std::endl;
+
     playeridle=player.createCycle(8,4,0,200,180,8,4);  //createCycle(int totalrows, int totalcolumns,starting column ,int w, int h, int amount, int speed)
     playerleft=player.createCycle(8,9,4,200,180,8,4);
     player.setSrc(0,0,200,180);
@@ -89,41 +94,27 @@ void Game::loop()
 }
 void Game::update()
 {
-
+//    background->update();
 
     player.updateAnimation();
-    background.update(backgrounds);
+    backgrounds[0].update();
+    backgrounds[1].update();
 
-/*    background[0].setSrc(background[0].getSrc().x,background[0].getSrc().y-1,640,640);
-    background[0].setHeight(background[0].getSrc().y-1);
-    if(background[0].getHeight()<1)
-    {
-        background[0].setSrc(background[0].getSrc().x,2560,640,640);
-    }
     
-
-    background[1].setSrc(background[1].getSrc().x,background[1].getSrc().y-2,640,640);
-    background[1].setHeight(background[1].getSrc().y-2);
-
-    if(background[1].getHeight()<1)
-    {
-        background[1].setSrc(background[1].getSrc().x,640,640,640);
-    }  */
+    //backgrounds.update();
 }
 void Game::render()
 {
-
+    
     SDL_SetRenderDrawColor(ren, 0,0,0,255);
     rect.x=rect.y=0;
     rect.w=640;
     rect.h=640;
     SDL_RenderFillRect(ren,&rect);
 
-    for(int i = 0;i<=numberBGlayers;i++)
-    {
-        draw(backgrounds[i]);
-    }
-   // std::cout<<"background index size: "<<sizeof(backgrounds)<<std::endl;
+    draw(backgrounds[0]);
+    draw(backgrounds[1]);
+
     draw(player);
     drawText("OpenGLTest",20,30,255,255,255);
     frameCount++;
@@ -144,12 +135,12 @@ void Game::input()
         if(e.type ==SDL_QUIT) //quit on close window
         {
             running=false;
-            
+            break;
         }
+        //should use else if statements instead of just ifavoid running other
         if(e.type == SDL_KEYUP)
         {
            player.setCurrentAnimation(playeridle);
-        
         }
         if(keystates[SDL_SCANCODE_Q])
         {
@@ -167,7 +158,7 @@ void Game::input()
         }
         if(keystates[SDL_SCANCODE_W])
         {
-            
+
             player.setDest(player.getDest().x,player.getDest().y-10,200,180);
             
         }
@@ -185,8 +176,8 @@ void Game::draw(Object o)
     SDL_Rect dest = o.getDest();
     SDL_Rect src = o.getSrc();
     SDL_RenderCopyEx(ren,o.getTex(),&src,&dest,0,NULL,SDL_FLIP_NONE);
-    //SDL_DestroyTexture(o.getTex());
 }
+
 
 
 void Game::drawText(const char* msg, int x, int y, int r, int g, int b)
@@ -214,8 +205,11 @@ Game::~Game()
 {
     TTF_CloseFont(font);
     TTF_Quit();
+    
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();
+  
+  ///  delete backgrounds[];
     
 }

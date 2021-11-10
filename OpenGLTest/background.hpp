@@ -21,8 +21,8 @@ public:
         void update(Object backgrounds[]);
     
 private:
-    Object bg,mg,fg;
-    int numberBGlayers;
+    Object bg,mg,fg,bg2,mg2;
+    int bglayers;
 };
 
 
