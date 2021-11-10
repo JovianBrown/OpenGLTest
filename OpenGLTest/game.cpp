@@ -31,33 +31,34 @@ Game::Game()
     {
         cout<<"unable to load font";
     }
-  //  background.backgrounds[0].setImage("res/starsBGlayer1.png",ren);
+
     
-   /* background.setHeight(1200);
-    background.backgrounds[0]->setImage("res/starsBGlayer1.png",ren);
-    background.backgrounds[0]->setSrc(0,640,640,640);
-    background.backgrounds[0]->setDest(0,0,640,640); */
- //   background.getBackground().backgrounds[0].setImage("res/starsBGlayer1.png",ren);
- //   background.backgrounds[0].setImage("res/starsBGlayer1.png",ren);
- //   background.backgrounds[0].setSrc(0,640,640,640);
-  //  background.backgrounds[0].setDest(0,0,640,640);
-  //  background.setHeight(1200);
     
     backgrounds[0].setHeight(640);
     backgrounds[0].setOffset(0);
-    backgrounds[0].setSrc(0,0,640,640);
+    backgrounds[0].setSrc(0,0,1280,1280);
     backgrounds[0].setDest(0,-640,640,640);
-    backgrounds[0].setImage("res/starsBGlayer1.png",ren);
-    std::cout<<"BG0 OFFSET" << backgrounds[0].getOffset()<<std::endl;
-    
+    backgrounds[0].setImage("res/starsBGlayer0small.png",ren);
     backgrounds[1].setHeight(640);
     backgrounds[1].setOffset(0);
-    backgrounds[1].setSrc(0,0,640,640);
+    backgrounds[1].setSrc(0,0,1280,1280);
     backgrounds[1].setDest(0,0,640,640);
-    backgrounds[1].setImage("res/starsBGlayer1.png",ren);
-    std::cout<<"BG1 OFFSET" << backgrounds[1].getOffset()<<std::endl;
-
-  //  std::cout<<backgrounds[1].getHeight()<<std::endl;
+    backgrounds[1].setImage("res/starsBGlayer0small.png",ren);
+    
+    
+    midgrounds[0].setHeight(640);
+    midgrounds[0].setOffset(0);
+    midgrounds[0].setSrc(0,0,640,640);
+    midgrounds[0].setDest(0,-640,640,640);
+    midgrounds[0].setImage("res/starsBGlayer1.png",ren);
+    std::cout<<"BG0 OFFSET" << midgrounds[0].getOffset()<<std::endl;
+    
+    midgrounds[1].setHeight(640);
+    midgrounds[1].setOffset(0);
+    midgrounds[1].setSrc(0,0,640,640);
+    midgrounds[1].setDest(0,0,640,640);
+    midgrounds[1].setImage("res/starsBGlayer1.png",ren);
+    std::cout<<"BG1 OFFSET" << midgrounds[1].getOffset()<<std::endl;
 
     playeridle=player.createCycle(8,4,0,200,180,8,4);  //createCycle(int totalrows, int totalcolumns,starting column ,int w, int h, int amount, int speed)
     playerleft=player.createCycle(8,9,4,200,180,8,4);
@@ -97,8 +98,11 @@ void Game::update()
 //    background->update();
 
     player.updateAnimation();
-    backgrounds[0].update();
-    backgrounds[1].update();
+    backgrounds[0].update(1);
+    backgrounds[1].update(1);
+
+    midgrounds[0].update(2);
+    midgrounds[1].update(2);
 
     
     //backgrounds.update();
@@ -111,9 +115,11 @@ void Game::render()
     rect.w=640;
     rect.h=640;
     SDL_RenderFillRect(ren,&rect);
-
     draw(backgrounds[0]);
     draw(backgrounds[1]);
+
+    draw(midgrounds[0]);
+    draw(midgrounds[1]);
 
     draw(player);
     drawText("OpenGLTest",20,30,255,255,255);

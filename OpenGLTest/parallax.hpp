@@ -19,6 +19,7 @@ public:
     {
         height=0;
         offset=640;
+        speed=1;
     }
 
 
@@ -33,9 +34,10 @@ public:
     void setHeight(int height);
     void setOffset(int offset);
 
-    void update();
+    void update(int speed);
 private:
     int height;
     int offset;
+    int speed;
 };
 #endif /* parallax_hpp */

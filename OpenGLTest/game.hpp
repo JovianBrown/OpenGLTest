@@ -53,6 +53,8 @@ private:
 
     Player player;
     Parallax backgrounds[2];
+
+    Parallax midgrounds[2];
   //  Object backgrounds[2];
     int playeridle;
     int playerleft;

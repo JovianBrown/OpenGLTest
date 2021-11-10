@@ -9,35 +9,17 @@
 #include "parallax.hpp"
 
 
-void Parallax::update()
+void Parallax::update(int speed)
 {
-    this->setDest(this->getDest().x,this->getDest().y+1,640,640);
+    this->setDest(this->getDest().x,this->getDest().y+speed,this->getDest().w,this->getDest().h);
     
     std::cout<<"dest Y : "<<this->getDest().y<<std::endl;
     if(this->getDest().y>this->getHeight())
     {
-        this->setDest(this->getDest().x,this->offset-this->getHeight(),640,640);
+        this->setDest(this->getDest().x,this->offset-this->getHeight(),this->getDest().w,this->getDest().h);
     }
  
-    
-    /*   if(this->getDest().y>offset)
-    {
-        this->setDest(this->getDest().x,this->getOffset(),640,640);
-    }  */
-    
-    
-    
-    
-    
-    
-    //      this->setSrc(this->getSrc().x,this->getSrc().y-1,640,640);
-
-/*    this->setSrc(this->getSrc().x,this->getSrc().y-1,640,640);
-    std::cout<<this->getSrc().y<<std::endl;
-    if(this->getSrc().y<1)
-    {
-        this->setSrc(this->getSrc().x,this->getHeight(),640,640);
-    } */
+ 
 }
 void Parallax::setHeight(int height)
 {
