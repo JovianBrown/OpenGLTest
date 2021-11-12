@@ -18,7 +18,7 @@ public:
     Parallax()
     {
         height=0;
-        offset=640;
+        offset=0;
         speed=1;
     }
 
@@ -31,7 +31,7 @@ public:
     {
         return offset;
     }
-    void setHeight(int height);
+    void setHeight(int& height);
     void setOffset(int offset);
 
     void update(int speed);

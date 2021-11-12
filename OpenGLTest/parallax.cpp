@@ -21,7 +21,7 @@ void Parallax::update(int speed)
  
  
 }
-void Parallax::setHeight(int height)
+void Parallax::setHeight(int& height)
 {
     this->height=height;
 }

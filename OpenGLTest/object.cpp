@@ -25,7 +25,7 @@ void Object::setSrc(int x, int y, int w, int h)
 }
 
 
-void Object::setImage(std::string filename, SDL_Renderer* ren)
+void Object::setImage(const std::string& filename, SDL_Renderer* ren)
 {
     SDL_Surface* surf = IMG_Load(filename.c_str());
     texture = SDL_CreateTextureFromSurface(ren, surf);

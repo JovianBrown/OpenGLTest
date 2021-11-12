@@ -32,33 +32,38 @@ Game::Game()
         cout<<"unable to load font";
     }
 
+    int height = 640;
+    std::string bgFilename = "res/starsBGlayer0small.png";
+    //std::string& bgFilenameRef = bgFilename;
+    std::string mgFilename = "res/starsBGlayer1.png";
+//    std::string& mgFilenameRef = bgFilename;
+    
+   // int& heightReference = height;
     
     
-    backgrounds[0].setHeight(640);
+    backgrounds[0].setHeight(height);
     backgrounds[0].setOffset(0);
     backgrounds[0].setSrc(0,0,1280,1280);
     backgrounds[0].setDest(0,-640,640,640);
-    backgrounds[0].setImage("res/starsBGlayer0small.png",ren);
-    backgrounds[1].setHeight(640);
+    backgrounds[0].setImage(bgFilename,ren);
+    
+    backgrounds[1].setHeight(height);
     backgrounds[1].setOffset(0);
     backgrounds[1].setSrc(0,0,1280,1280);
     backgrounds[1].setDest(0,0,640,640);
-    backgrounds[1].setImage("res/starsBGlayer0small.png",ren);
+    backgrounds[1].setImage(bgFilename,ren);
     
-    
-    midgrounds[0].setHeight(640);
+    midgrounds[0].setHeight(height);
     midgrounds[0].setOffset(0);
     midgrounds[0].setSrc(0,0,640,640);
     midgrounds[0].setDest(0,-640,640,640);
-    midgrounds[0].setImage("res/starsBGlayer1.png",ren);
-    std::cout<<"BG0 OFFSET" << midgrounds[0].getOffset()<<std::endl;
+    midgrounds[0].setImage(mgFilename,ren);
     
-    midgrounds[1].setHeight(640);
+    midgrounds[1].setHeight(height);
     midgrounds[1].setOffset(0);
     midgrounds[1].setSrc(0,0,640,640);
     midgrounds[1].setDest(0,0,640,640);
-    midgrounds[1].setImage("res/starsBGlayer1.png",ren);
-    std::cout<<"BG1 OFFSET" << midgrounds[1].getOffset()<<std::endl;
+    midgrounds[1].setImage(mgFilename,ren);
 
     playeridle=player.createCycle(8,4,0,200,180,8,4);  //createCycle(int totalrows, int totalcolumns,starting column ,int w, int h, int amount, int speed)
     playerleft=player.createCycle(8,9,4,200,180,8,4);
@@ -209,9 +214,11 @@ void Game::drawText(const char* msg, int x, int y, int r, int g, int b)
 
 Game::~Game()
 {
+ //   delete[] backgrounds;
+  //  delete[] midgrounds;
+
     TTF_CloseFont(font);
     TTF_Quit();
-    
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();

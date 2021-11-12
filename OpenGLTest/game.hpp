@@ -52,10 +52,10 @@ private:
     int frameCount, timerFPS, lastFrame;
 
     Player player;
-    Parallax backgrounds[2];
+    static int const bgLayers=2;
+    Parallax backgrounds[bgLayers];
+    Parallax midgrounds[bgLayers];
 
-    Parallax midgrounds[2];
-  //  Object backgrounds[2];
     int playeridle;
     int playerleft;
 };

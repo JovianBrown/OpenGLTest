@@ -31,7 +31,7 @@ public:
     
     void setDest(int x, int y, int h, int w);
     void setSrc(int x, int y, int h, int w);
-    void setImage(std::string filename, SDL_Renderer* ren);
+    void setImage(const std::string& filename, SDL_Renderer* ren);
     SDL_Texture* getTex() const
     {
         return texture;
